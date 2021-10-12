@@ -23,7 +23,7 @@ function displayArticle(article) {
 
     document.getElementById("main").innerHTML += `
     <section class="items" id="items">
-        <a href="./product.html?id=${article._id}">
+        <a href="./product.html?${article._id}">
             <article>
                 <img src="${article.imageUrl}" alt="${article.altTxt}">
                 <h3 class ="productName">${article.name}</h3>
