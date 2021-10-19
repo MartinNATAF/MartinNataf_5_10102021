@@ -152,26 +152,20 @@ function changement() { // fonction qui regarde si il y'a un changement dans les
 
 function ContactCheck() { //vérifie si le formulaire est bien remplie avant de faire la requète POST vers l'api
     const order = document.getElementById('order');
-    order.addEventListener('click', function() {
-        var firstName = document.getElementById('firstName').value;
-        var firstNameIsValide = validationFirstName(firstName);
-        var lastName = document.getElementById('lastName').value;
-        var lastNameIsValide = validationLastName(lastName);
-        var adresse = document.getElementById('address').value;
-        var adresseIsValide = validationAdresse(adresse);
-        var city = document.getElementById('city').value;
-        var cityIsValide = validationCity(city);
-        var email = document.getElementById('email').value;
-        var emailIsValide = validationMail(email);
-        var store = localStorage.length
-        if (firstNameIsValide === true && lastNameIsValide === true) {
-            if (adresseIsValide === true && cityIsValide === true) {
-                if (emailIsValide === true && store != 0) {
+    order.addEventListener('click', function()  {
+        console.log("test")
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const adresse = document.getElementById('address').value;
+        const city = document.getElementById('city').value;
+        const email = document.getElementById('email').value;
+        let store = localStorage.length
+        if (validationFirstName(firstName) === true && validationLastName(lastName) === true) {
+            if (validationAdresse(adresse) === true && validationCity(city) === true) {
+                if (validationMail(email) === true && store != 0) {
                     postReservaiton(firstName, lastName, adresse, city, email); // envoie la requète post
                 }
-                return (0)
             }
-            return (0)
         }
         if (store === 0) {
             alert("Votre commande est vide, merci de bien vouloir remplir votre panier")
@@ -256,8 +250,8 @@ function postReservaiton(first, last, adresse, ville, mail) { // crée le tablea
         contact,
         products
     }
-     
 
+    alert("votre numéro de commande arrive ..")
     axios.post("http://localhost:3000/api/products/order", JSON.stringify(aEnvoyer), {headers: {'Content-Type': 'application/json'}}) // on utilise axios pour faire un post vers l'api on privilégie cette méthode qui est plus facile.
         .then(function(res){
             const resultat = res
