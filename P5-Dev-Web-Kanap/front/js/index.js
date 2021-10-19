@@ -6,7 +6,7 @@
     }
 })()
 
-function getArticles() {
+function getArticles() {  // on récupère l'ensemble des articles dans l'API et ce n'est qu'une fois les articles arrivés qu'on continue pour la suite.
     return fetch("http://localhost:3000/api/products")
         .then(function (httpBodyResponse) {
             return httpBodyResponse.json()
@@ -19,7 +19,7 @@ function getArticles() {
         })
 }
 
-function displayArticle(article) {
+function displayArticle(article) { // on affiche un article par un article en avancant dans le tableau qu'on a récupéré grâce au fetch. 
 
     document.getElementById("main").innerHTML += `
     <section class="items" id="items">

@@ -6,18 +6,20 @@
         displayColor(color)
     }
     const addCart = document.getElementById('addToCart');
-    addCart.addEventListener('click', function() {
+    addCart.addEventListener('click', function() { //Cette fonction ce déclenche quand l'utilisateur clique sur ajouter au panier
         var selectElem = document.getElementById('colors');
         var index = selectElem.selectedIndex;
         var idArticle = article._id;
         var quantity = document.getElementById('quantity').value;
 
-        if(index != 0 && quantity > 0) {
+        if(index != 0 && quantity > 0) { //on vérifie que la couleur a été choisie et que la quantitée n'est pas à 0
             console.log('top')
-            return addPagner(index, colors, idArticle, quantity);
+            addPagner(index, colors, idArticle, quantity);
+            verifOrdre();
         }
         else {
             console.log('nop')
+            alert('il faut choisir une couleur et avoir au moins un article pour commander !')
             return (1);
         }
     });
@@ -39,7 +41,7 @@ function getArticle() {
         })
 }
 
-function displayArticle(article) {
+function displayArticle(article) {  //affichage du détail du produit en récupérant les info de l'API
 
     document.getElementById("main").innerHTML += `
     <article>
@@ -79,15 +81,15 @@ function displayArticle(article) {
     </article> `
 }
 
-function displayColor(color) {
+function displayColor(color) {   //une fois que l'ensemble du html est afficher on rajoute les couleurs récupérer sur l'api.
     document.getElementById("colors").innerHTML += `
         <option value="${color}">${color}</option>
     `
 }
 
-function addPagner(index, colors, id, quantity) {
-    var colorValide = colors[index - 1]
-    var size = localStorage.length
+function addPagner(index, colors, id, quantity) {  // C'est une fonction qui vérifie qu'il n'existe pas déja dans notre
+    var colorValide = colors[index - 1]            // storage un élément avec le même id et la même couleur. Si oui il
+    var size = localStorage.length                 // rassemble les deux élément en un élément en additionnant les quantités.
     var key = id + colorValide
     let commande = {
         _id: id,
@@ -117,6 +119,33 @@ function addPagner(index, colors, id, quantity) {
             localStorage.setItem(key, tableauString);
             console.log(localStorage);
         }
+    }
+}
+
+function verifOrdre() {  //Afficher les produits dans l'ordre de manière à ce que les mêmes produits ce suivent dans le panier -> tri à bulle .
+    var i = 0;
+    var j = 1;
+    var size = localStorage.length;
+    while(i < size) {
+        while(j < size) {
+            let key = localStorage.key(i);
+            let sortir = localStorage.getItem(key);
+            let sortirJson = JSON.parse(sortir);
+            let key2 = localStorage.key(j);
+            let sortir2 = localStorage.getItem(key2);
+            let sortirJson2 = JSON.parse(sortir2);
+            let keySwap = localStorage.key(i + 1);
+            let sortSwap = localStorage.getItem(keySwap);
+            let sortirJsonSwap = JSON.parse(sortSwap);
+            if (sortirJson._id === sortirJson2._id) {
+                var a = sortirJson2;
+                var b = sortirJsonSwap;
+                sortirJson2 = b;
+                sortirJsonSwap = a;
+            }
+            j++;
+        }
+        i++;
     }
 }
 
