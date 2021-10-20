@@ -237,12 +237,16 @@ async function postReservaiton(first, last, adresse, ville, mail) { // crée le 
         city: ville,
         email: mail
     }
+    alert('1')
     let products = [];
     var i = 0;
+    let key;
+    let sortir;
+    let sortirJson;
     while (i < localStorage.length) { //on remplis le tableau avec nos valeurs final.
-        let key = localStorage.key(i);
-        let sortir = localStorage.getItem(key);
-        let sortirJson = JSON.parse(sortir);
+        key = localStorage.key(i);
+        sortir = localStorage.getItem(key);
+        sortirJson = JSON.parse(sortir);
         products[i] = sortirJson._id;
         i++;
     }
@@ -251,6 +255,7 @@ async function postReservaiton(first, last, adresse, ville, mail) { // crée le 
         products
     }
 
+    alert('vous allez être redirigé sur la page de confirmation')
     await axios.post("http://localhost:3000/api/products/order", JSON.stringify(aEnvoyer), {headers: {'Content-Type': 'application/json'}}) // on utilise axios pour faire un post vers l'api on privilégie cette méthode qui est plus facile.
         .then(function(res){
             const resultat = res
