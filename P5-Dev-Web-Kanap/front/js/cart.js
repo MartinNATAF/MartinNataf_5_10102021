@@ -229,7 +229,7 @@ function validationAdresse(value) {
     }
 }
 
-function postReservaiton(first, last, adresse, ville, mail) { // crée le tableau de donnée de contatc
+async function postReservaiton(first, last, adresse, ville, mail) { // crée le tableau de donnée de contatc
     let contact = {
         firstName: first,
         lastName: last,
@@ -251,8 +251,7 @@ function postReservaiton(first, last, adresse, ville, mail) { // crée le tablea
         products
     }
 
-    alert("votre numéro de commande arrive ..")
-    axios.post("http://localhost:3000/api/products/order", JSON.stringify(aEnvoyer), {headers: {'Content-Type': 'application/json'}}) // on utilise axios pour faire un post vers l'api on privilégie cette méthode qui est plus facile.
+    await axios.post("http://localhost:3000/api/products/order", JSON.stringify(aEnvoyer), {headers: {'Content-Type': 'application/json'}}) // on utilise axios pour faire un post vers l'api on privilégie cette méthode qui est plus facile.
         .then(function(res){
             const resultat = res
             const redirection = "./confirmation.html?" + resultat.data.orderId
