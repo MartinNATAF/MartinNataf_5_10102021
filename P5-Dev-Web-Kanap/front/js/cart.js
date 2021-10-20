@@ -237,7 +237,6 @@ async function postReservaiton(first, last, adresse, ville, mail) { // crée le 
         city: ville,
         email: mail
     }
-    alert('1')
     let products = [];
     var i = 0;
     let key;
@@ -254,9 +253,13 @@ async function postReservaiton(first, last, adresse, ville, mail) { // crée le 
         contact,
         products
     }
+    envoiePost(aEnvoyer);
+    
+}
 
-    alert('vous allez être redirigé sur la page de confirmation')
-    await axios.post("http://localhost:3000/api/products/order", JSON.stringify(aEnvoyer), {headers: {'Content-Type': 'application/json'}}) // on utilise axios pour faire un post vers l'api on privilégie cette méthode qui est plus facile.
+
+async function envoiePost(post) {
+    await axios.post("http://localhost:3000/api/products/order", JSON.stringify(post), {headers: {'Content-Type': 'application/json'}}) // on utilise axios pour faire un post vers l'api on privilégie cette méthode qui est plus facile.
         .then(function(res){
             const resultat = res
             const redirection = "./confirmation.html?" + resultat.data.orderId
@@ -267,3 +270,4 @@ async function postReservaiton(first, last, adresse, ville, mail) { // crée le 
             console.log(err)
         })
 }
+
